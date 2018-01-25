@@ -37,14 +37,14 @@ pipeline {
     }
     stage('Docker Build') {
       steps {
-        sh 'docker build -t eugeneferry/spring-petclinic:latest .'
+        sh 'docker build -t eugeneferry/spring-petclinic:1.0.0 .'
       }
     }
 	stage('Docker Push') {
       steps {
         withCredentials([usernamePassword(credentialsId: 'credentials-id', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
           sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-          sh 'docker push eugeneferry/spring-petclinic:latest'
+          sh 'docker push eugeneferry/spring-petclinic:1.0.0'
 		}
       }
     }
