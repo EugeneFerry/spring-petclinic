@@ -13,14 +13,9 @@ pipeline {
       }
     }
     stage('Docker Build') {
-        agent {
-          docker {
-             image 'docker:latest'
-          }
-        }
-		steps {
-        	sh 'docker build -t eugenef/spring-petclinic:latest .'
-		}
+	  steps {
+	    def app = docker.build "eugenef/spring-petclinic:latest"
+	  }
     }
   }
 }
