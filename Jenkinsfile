@@ -12,10 +12,5 @@ pipeline {
         sh 'mvn -B -DskipTests clean package'
       }
     }
-    stage('Docker Build') {
-	  steps {
-	    def app = docker.build("eugenef/spring-petclinic:latest")
-	  }
-    }
   }
 }
