@@ -14,12 +14,7 @@ pipeline {
     }
     stage('Docker Build') {
 	  steps {
-		 script {
-			docker.withTool('docker') {
-					def app = docker.build("eugenef/spring-petclinic:latest")
-					echo "Push to Docker repository ..."
-			}
-         }
+        sh "docker build -t eugeneferry/spring-petclinic:latest ."
 	  }
     }
   }
