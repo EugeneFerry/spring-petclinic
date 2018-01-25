@@ -14,7 +14,7 @@ pipeline {
     }
     stage('Docker Build') {
 	  steps {
-	    def app = docker.build "eugenef/spring-petclinic:latest"
+	    def app = docker.build("eugenef/spring-petclinic:latest")
 	  }
     }
   }
