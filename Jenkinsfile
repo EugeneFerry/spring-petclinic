@@ -19,11 +19,16 @@ pipeline {
         sh 'mvn -B -DskipTests clean package'
       }
     }
-    stage('Build and Publish Image') {
+    stage('Docker Build') {
       steps {
-        sh '''
-          docker build -t eugeneferry/spring-petclinic:latest .
-        '''
+        sh 'docker build -t eugeneferry/spring-petclinic:latest .'
+      }
+    }
+	stage('Docker Push') {
+      steps {
+        withCredentials([usernamePassword(credentialsId: 'credentials-id', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+          sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
+          sh 'docker push shanem/spring-petclinic:latest'
       }
     }
   }
