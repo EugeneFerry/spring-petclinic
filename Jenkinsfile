@@ -12,11 +12,20 @@ pipeline {
         sh 'mvn -B -DskipTests clean package'
       }
     }
+    stage('Test') {
+        steps {
+            sh 'mvn test'
+        }
+        post {
+            always {
+                junit 'target/surefire-reports/*.xml'
+            }
+        }
+    }
     stage('Docker Build') {
-        agent any
-		steps {
-        	sh 'docker build -t eugenef/spring-petclinic:latest .'
-		}
+        steps {
+            sh 'docker build -t eugenef/spring-petclinic:latest .'
+        }
     }
   }
 }
