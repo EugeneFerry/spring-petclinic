@@ -1,27 +1,20 @@
 pipeline {
   agent none
   stages {
-    stage('Build') {
+    stage('Maven Install') {
       agent {
         docker {
-          image 'maven:3-alpine'
-          args '-v /root/.m2:/root/.m2'
+          image 'maven:3.5.0'
         }
-        
       }
       steps {
-        sh 'mvn -B -DskipTests clean package'
+        sh 'mvn clean install'
       }
     }
     stage('Docker Build') {
-      agent {
-        docker {
-          image 'docker'
-        }
-        
-      }
+      agent any
       steps {
-        sh 'docker build -t eugeneferry/spring-petclinic:latest .'
+        sh 'docker build -t shanem/spring-petclinic:latest .'
       }
     }
   }
